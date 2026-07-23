@@ -13,12 +13,33 @@ It exposes two slash commands:
 
 ## Install
 
-Add this repo as a marketplace, then install the plugin from it:
+The `/plugin` commands below are **slash commands typed inside a Claude Code session**, not shell commands — no need to clone this repo first.
 
-```
-/plugin marketplace add i18nllc/iterm-badge
-/plugin install iterm-badge@iterm-badge
-```
+1. Open a terminal (iTerm2, since that's the point 🙂) and start Claude Code:
+
+   ```bash
+   claude
+   ```
+
+2. At the Claude Code prompt, add this repo as a plugin marketplace (Claude Code fetches it from GitHub for you):
+
+   ```
+   /plugin marketplace add i18nllc/iterm-badge
+   ```
+
+3. Install the plugin from it:
+
+   ```
+   /plugin install iterm-badge@iterm-badge
+   ```
+
+4. Try it:
+
+   ```
+   /iterm-badge:itb Hello
+   ```
+
+   A translucent "Hello" appears in the window's top-right. If the commands aren't found, restart Claude Code (or run `/reload-plugins`) and try again.
 
 ### Local development
 
