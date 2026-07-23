@@ -1,5 +1,5 @@
 # iterm-badge 
-# SKILL
+# Claude Marketplace Plugin / Skill
 
 A tiny [Claude Code](https://code.claude.com/docs/en/overview) plugin that sets and clears the **iTerm2 window badge** — the big translucent label iTerm2 draws in the top-right corner of the terminal. Label each Claude Code session with its project name and you can tell your windows apart at a glance, even from across the room or in Mission Control.
 
