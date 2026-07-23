@@ -1,0 +1,12 @@
+{
+  "name": "iterm-badge-auto",
+  "description": "Zero-config iTerm2 badge status lamp for Claude Code. Installs hooks that automatically set the window badge to 🔄 working when you submit a prompt, ✅ done when Claude finishes, ⏳ needs you when Claude is waiting on you, and clear it when the session ends. No commands to run, no settings to edit — install and it's on.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lou (i18nllc)",
+    "url": "https://github.com/i18nllc"
+  },
+  "homepage": "https://github.com/i18nllc/iterm-badge",
+  "repository": "https://github.com/i18nllc/iterm-badge",
+  "license": "MIT"
+}

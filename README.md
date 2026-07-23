@@ -5,12 +5,12 @@ A tiny [Claude Code](https://code.claude.com/docs/en/overview) plugin that sets 
 
 ![Four iTerm2 windows, each badged with its project: frontend, backend, marketing, UI/UX](assets/badge-demo.png)
 
-It exposes two slash commands:
+This repo is a Claude Code plugin **marketplace** containing **two plugins**. Install either or both:
 
-| Command | What it does |
-| :-- | :-- |
-| `/iterm-badge:itb <text>` | Set the badge to `<text>` (emoji welcome) |
-| `/iterm-badge:itc` | Clear the badge |
+| Plugin | What it does | You interact by |
+| :-- | :-- | :-- |
+| **`iterm-badge`** | **Manual badge control.** Two slash commands: `/iterm-badge:itb <text>` sets the badge (emoji welcome), `/iterm-badge:itc` clears it. | Typing a command whenever you want the badge to change. |
+| **`iterm-badge-auto`** | **Automatic status lamp.** Hooks flip the badge to `🔄 working` when you submit a prompt, `✅ done` when Claude finishes, `⏳ needs you` when Claude waits on your input — and clear it when the session ends. | Nothing. Install it and it's on. |
 
 ## Install
 
@@ -41,6 +41,12 @@ The `/plugin` commands below are **slash commands typed inside a Claude Code ses
    ```
 
    A translucent "Hello" appears in the window's top-right. If the commands aren't found, restart Claude Code (or run `/reload-plugins`) and try again.
+
+5. Optional — also want the automatic `🔄 working` / `✅ done` / `⏳ needs you` status lamp? Install the second plugin; there is nothing to configure:
+
+   ```
+   /plugin install iterm-badge-auto@iterm-badge
+   ```
 
 ### Local development
 
@@ -77,7 +83,7 @@ Setting the badge yourself is nice; having **Claude keep it updated while it wor
 
 ### One-time setup: the badge helper script
 
-One command installs [`scripts/badge.sh`](scripts/badge.sh) to `~/.claude/badge.sh`:
+One command installs [`scripts/badge.sh`](scripts/badge.sh) to `~/.claude/badge.sh`. (Skip this whole setup if all you want is the automatic status lamp — the `iterm-badge-auto` plugin bundles its own copy.)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/i18nllc/iterm-badge/main/scripts/badge.sh -o ~/.claude/badge.sh && chmod +x ~/.claude/badge.sh
@@ -124,7 +130,15 @@ Each window now tells you what its Claude is *doing* — `🔧 fixing auth`, `3/
 
 ## 2. An "is Claude done?" lamp, via hooks
 
-Wire the script into [hooks](https://code.claude.com/docs/en/hooks) in `~/.claude/settings.json` and the badge becomes an ambient status light — glance at any window to know whether Claude is grinding, finished, or waiting on you:
+The badge becomes an ambient status light — glance at any window (or Mission Control) to know whether Claude is grinding, finished, or waiting on you.
+
+**The zero-effort way:** install the companion plugin. Its hooks and badge script come bundled — nothing to download, nothing to configure:
+
+```
+/plugin install iterm-badge-auto@iterm-badge
+```
+
+**The custom way:** if you want your own texts or extra events, skip the plugin and wire the helper script into [hooks](https://code.claude.com/docs/en/hooks) in `~/.claude/settings.json` yourself:
 
 ```json
 {

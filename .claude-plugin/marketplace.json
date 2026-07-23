@@ -4,12 +4,19 @@
     "name": "Lou (i18nllc)",
     "url": "https://github.com/i18nllc"
   },
-  "description": "Marketplace for the iterm-badge Claude Code plugin.",
+  "description": "Marketplace for the iterm-badge Claude Code plugins: manual badge slash commands, and a zero-config automatic badge status lamp.",
   "plugins": [
     {
       "name": "iterm-badge",
       "source": "./",
-      "category": "productivity"
+      "category": "productivity",
+      "description": "Manual control: /iterm-badge:itb <text> sets the iTerm2 window badge, /iterm-badge:itc clears it. You decide what each window says and when."
+    },
+    {
+      "name": "iterm-badge-auto",
+      "source": "./plugins/iterm-badge-auto",
+      "category": "productivity",
+      "description": "Automatic status lamp: hooks set the badge to 🔄 working / ✅ done / ⏳ needs you as Claude works, and clear it when the session ends. Zero configuration."
     }
   ]
 }
