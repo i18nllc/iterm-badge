@@ -77,11 +77,20 @@ Setting the badge yourself is nice; having **Claude keep it updated while it wor
 
 ### One-time setup: the badge helper script
 
-Save this as `~/.claude/badge.sh` (and `chmod +x` it). It walks up the process tree to find the session's real tty, so it works from Claude's Bash tool and from hooks, where there is no controlling terminal:
+One command installs [`scripts/badge.sh`](scripts/badge.sh) to `~/.claude/badge.sh`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/i18nllc/iterm-badge/main/scripts/badge.sh -o ~/.claude/badge.sh && chmod +x ~/.claude/badge.sh
+```
+
+<details>
+<summary>What you're installing (20 lines of POSIX sh — click to read)</summary>
 
 ```sh
 #!/bin/sh
-# Set the iTerm2 badge ($* = text, empty = clear).
+# Set the iTerm2 badge ($* = text, empty = clear). Safe to call from
+# Claude Code hooks or the Bash tool: walks up the process tree to find
+# the session's real tty, since these shells have no controlling terminal.
 b64=$(printf '%s' "$*" | base64)
 if [ -n "$TMUX" ]; then
   printf '\ePtmux;\e\e]1337;SetBadgeFormat=%s\a\e\\' "$b64" > "$(tmux display-message -p '#{pane_tty}')"
@@ -98,6 +107,10 @@ while [ -n "$p" ] && [ "$p" -gt 1 ]; do
 done
 echo "no tty found"  # headless run — harmless no-op
 ```
+
+</details>
+
+Usage: `sh ~/.claude/badge.sh <text>` sets the badge; no argument clears it. Unlike the slash commands' inline one-liner, it **walks up the process tree** to find the session's real tty, so it also works from Claude's Bash tool and from hooks, where there is no controlling terminal.
 
 Then pick your flavor:
 
