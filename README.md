@@ -71,6 +71,62 @@ They then load as `/itb` and `/itc` in every project.
 
 **One badge per window.** The badge belongs to the iTerm2 session (window/tab/pane), so the pattern for juggling multiple projects is: open one window per project, and in each one run `/iterm-badge:itb <project name>` as your first command. Every window now wears its project's name — no more "which Claude is this?" when you Cmd-Tab back.
 
+## Let Claude drive the badge
+
+Setting the badge yourself is nice; having **Claude keep it updated while it works** is the killer feature. The slash commands are deliberately manual (`disable-model-invocation: true` — Claude never renames your window uninvited), but the same escape sequence is one shell script away, and Claude can run *that* on request.
+
+### One-time setup: the badge helper script
+
+Save this as `~/.claude/badge.sh` (and `chmod +x` it). It walks up the process tree to find the session's real tty, so it works from Claude's Bash tool and from hooks, where there is no controlling terminal:
+
+```sh
+#!/bin/sh
+# Set the iTerm2 badge ($* = text, empty = clear).
+b64=$(printf '%s' "$*" | base64)
+if [ -n "$TMUX" ]; then
+  printf '\ePtmux;\e\e]1337;SetBadgeFormat=%s\a\e\\' "$b64" > "$(tmux display-message -p '#{pane_tty}')"
+  exit 0
+fi
+p=$PPID
+while [ -n "$p" ] && [ "$p" -gt 1 ]; do
+  t=$(ps -o tty= -p "$p" | tr -d ' ')
+  if [ -n "$t" ] && [ "$t" != "??" ]; then
+    printf '\e]1337;SetBadgeFormat=%s\a' "$b64" > "/dev/$t"
+    exit 0
+  fi
+  p=$(ps -o ppid= -p "$p" | tr -d ' ')
+done
+echo "no tty found"  # headless run — harmless no-op
+```
+
+Then pick your flavor:
+
+## 1. Claude narrates its work
+
+Add one line to a project's `CLAUDE.md`:
+
+> When you start a multi-step task, run `sh ~/.claude/badge.sh <2-3 word summary>` (e.g. `🔧 fixing auth`) and update it as the work progresses.
+
+Each window now tells you what its Claude is *doing* — `🔧 fixing auth`, `3/7 tests`, `deploying…` — readable from across the room or in Mission Control.
+
+## 2. An "is Claude done?" lamp, via hooks
+
+Wire the script into [hooks](https://code.claude.com/docs/en/hooks) in `~/.claude/settings.json` and the badge becomes an ambient status light — glance at any window to know whether Claude is grinding, finished, or waiting on you:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/badge.sh 🔄 working" }] }],
+    "Stop": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/badge.sh ✅ done" }] }],
+    "Notification": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/badge.sh ⏳ needs you" }] }]
+  }
+}
+```
+
+## 3. A "review me" flag
+
+Juggling several projects? Tell Claude: *"when you finish and want my review, badge this window 👀 review me"* — the window that's blocked on you announces itself.
+
 ## Requirements
 
 - **iTerm2** — badges are an iTerm2-only feature ([OSC 1337 `SetBadgeFormat`](https://iterm2.com/documentation-badges.html)). On any other terminal the commands print a message and no-op; nothing breaks.
