@@ -2,7 +2,7 @@
 
 A tiny [Claude Code](https://code.claude.com/docs/en/overview) plugin that sets and clears the **iTerm2 window badge** — the big translucent label iTerm2 draws in the top-right corner of the terminal. Label each Claude Code session with its project name and you can tell your windows apart at a glance, even from across the room or in Mission Control.
 
-<!-- ![Terminal window with a badge](assets/badge-demo.png) — screenshot coming soon -->
+![Four iTerm2 windows, each badged with its project: frontend, backend, marketing, UI/UX](assets/badge-demo.png)
 
 It exposes two slash commands:
 
@@ -91,7 +91,7 @@ They then load as `/itb` and `/itc` in every project.
 
 The escape sequence sets the badge **text only**. Appearance — color, font, size, position — is configured per-profile in iTerm2:
 
-![iTerm2 settings, Badge section](assets/iterm-settings.png)
+![iTerm2 Settings, Profiles, General tab — badge Edit popover with font, max width/height and margins](assets/iterm-settings.png)
 
 1. iTerm2 menu → **Settings** (Cmd+,) → **Profiles** → select your profile → **General** tab → **Badge** section.
 2. The **color well** next to the badge field sets the badge color **and alpha** — lower the alpha for the classic translucent watermark look.
