@@ -9,7 +9,7 @@ This repo is a Claude Code plugin **marketplace** containing **two plugins**. In
 
 | Plugin | What it does | You interact by |
 | :-- | :-- | :-- |
-| **`iterm-badge`** | **Manual badge control.** Two slash commands: `/iterm-badge:itb <text>` sets the badge (emoji welcome), `/iterm-badge:itc` clears it. | Typing a command whenever you want the badge to change. |
+| **`iterm-badge`** | **Manual badge control.** Two slash commands:<br>• `/iterm-badge:itb <text>` — sets the badge (emoji welcome)<br>• `/iterm-badge:itc` — clears it | Typing a command whenever you want the badge to change. |
 | **`iterm-badge-auto`** | **Automatic status lamp.** Hooks flip the badge to `🔄 working` when you submit a prompt, `✅ done` when Claude finishes, `⏳ needs you` when Claude waits on your input — and clear it when the session ends. | Nothing. Install it and it's on. |
 
 ## Install
