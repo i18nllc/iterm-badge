@@ -1,0 +1,12 @@
+{
+  "name": "iterm-badge",
+  "description": "Set and clear the iTerm2 window badge from Claude Code — label each window with its project so you can tell sessions apart at a glance. Works inside and outside tmux; no-ops gracefully on other terminals.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lou (i18nllc)",
+    "url": "https://github.com/i18nllc"
+  },
+  "homepage": "https://github.com/i18nllc/iterm-badge",
+  "repository": "https://github.com/i18nllc/iterm-badge",
+  "license": "MIT"
+}

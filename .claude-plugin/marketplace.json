@@ -1,0 +1,15 @@
+{
+  "name": "iterm-badge",
+  "owner": {
+    "name": "Lou (i18nllc)",
+    "url": "https://github.com/i18nllc"
+  },
+  "description": "Marketplace for the iterm-badge Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "iterm-badge",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
