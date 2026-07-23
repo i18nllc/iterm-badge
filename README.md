@@ -79,6 +79,14 @@ They then load as `/itb` and `/itc` in every project.
   set -g allow-passthrough on
   ```
 
+## Limitations
+
+- **iTerm2 only.** The badge escape sequence (OSC 1337 `SetBadgeFormat`) is an iTerm2 extension. Other terminals (Terminal.app, Ghostty, Alacritty, …) simply ignore the sequence, and when no tty is reachable at all (headless runs) the commands print a note and exit cleanly — nothing breaks either way.
+- **tmux works, but is opt-in.** Unlike naive badge scripts, the commands do wrap the sequence in tmux's DCS passthrough — but tmux ≥ 3.3 ships with passthrough disabled, so without `set -g allow-passthrough on` (see [Requirements](#requirements)) the badge silently won't appear.
+- **Text only, one badge per session.** The badge is plain text (plus emoji and iTerm2 interpolated variables) — no inline colors or markup, and setting a new badge replaces the old one. Styling lives in the iTerm2 profile, not the command (see [Styling the badge](#styling-the-badge)).
+- **Not persistent.** The badge belongs to the live iTerm2 session; close the window and it's gone. Re-run `/iterm-badge:itb` in new sessions (or bake a default into the profile's badge field).
+- **Namespaced names.** Plugin commands are always `/iterm-badge:itb` / `/iterm-badge:itc` — typing `/itb` fuzzy-matches in the command picker, or copy the files to `~/.claude/commands/` for true short names (see [Install](#prefer-short-itb--itc-names)).
+
 ## Styling the badge
 
 The escape sequence sets the badge **text only**. Appearance — color, font, size, position — is configured per-profile in iTerm2:
